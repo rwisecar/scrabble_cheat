@@ -1,5 +1,7 @@
 """ This is a simple python script to take a Scrabble rack of 7 letters and return all possible word iterations, with the associated scores."""
 
+import re
+
 # Dictionary of letters and values
 scores = {
     "a": 1,
@@ -39,4 +41,24 @@ for i in access_sowpods:
     i = i.strip(' \n\r')
     sowpods.append(i)
 
-#
+# Get the scrabble rack from the user
+def intro():
+    user_name = raw_input("Hello there! I see you want to win at Scrabble. I can help. First, tell me your name.")
+    print "Nice to meet you, %s." % user_name
+
+def get_rack():
+    input = raw_input("Now tell me, what 7 letters are we working with here? ").upper()
+    rack = ""
+    if len(input) < 7:
+        print("I'm sorry, you haven't entered a full rack. Please try again.")
+        exit()
+    else:
+        for i in input:
+            if re.match(r'^[A-Z]', i):
+                rack = rack + i
+            else:
+                print("I'm sorry, that is not a valid Scrabble rack. Please try again.")
+                exit()
+    print rack
+
+get_rack()
