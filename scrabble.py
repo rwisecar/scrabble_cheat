@@ -34,12 +34,16 @@ scores = {
 
 # Script to open and read the sowpods.txt word file, and strip of extraneous characters
 
-access_sowpods = open("sowpods.txt", "r+")
-sowpods = []
 
-for i in access_sowpods:
-    i = i.strip(' \n\r')
-    sowpods.append(i)
+sowpods = []
+score = 0
+
+def compile_sowpods():
+    access_sowpods = open("sowpods.txt", "r+")
+    for i in access_sowpods:
+        i = i.strip(' \n\r')
+        sowpods.append(i)
+        access_sowpods.close()
 
 # Get the scrabble rack from the user
 def intro():
@@ -49,8 +53,8 @@ def intro():
 def get_rack():
     input = raw_input("Now tell me, what 7 letters are we working with here? ").upper()
     rack = ""
-    if len(input) < 7:
-        print("I'm sorry, you haven't entered a full rack. Please try again.")
+    if len(input) < 7 or len(input) > 7:
+        print("I'm sorry, you haven't entered a full rack of 7 letters. Please try again.")
         exit()
     else:
         for i in input:
@@ -59,6 +63,11 @@ def get_rack():
             else:
                 print("I'm sorry, that is not a valid Scrabble rack. Please try again.")
                 exit()
-    print rack
+    print "Your rack is: %s" % rack
 
-get_rack()
+def print_options():
+    compile_sowpods()
+    intro()
+    get_rack()
+    for word in sowpods:
+        for r in rack:
